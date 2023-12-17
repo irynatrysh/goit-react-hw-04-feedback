@@ -1,29 +1,32 @@
 import PropTypes from 'prop-types';
-import {
-  FeedbackWrap,
-  FeedbackBtn,
-  FeedBaclList,
-} from './FeedbackOptions.styled';
+import { FeedbackWrap, FeedbackBtn, FeedBaclList } from './FeedbackOptions.styled';
+import { useState } from 'react';
 
-export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+  const [ setValue] = useState(0);
+
   return (
     <FeedbackWrap>
-      {options.map((option, idx) => {
-        return (
-          <FeedBaclList key={option}>
-            <FeedbackBtn
-              type="button"
-              value={idx}
-              children={option}
-              onClick={() => onLeaveFeedback(option)}
-            ></FeedbackBtn>
-          </FeedBaclList>
-        );
-      })}
+      {options.map((option, idx) => (
+        <FeedBaclList key={option}>
+          <FeedbackBtn
+            type="button"
+            value={idx}
+            children={option}
+            onClick={() => {
+              onLeaveFeedback(option);
+              setValue(idx);
+            }}
+          ></FeedbackBtn>
+        </FeedBaclList>
+      ))}
     </FeedbackWrap>
   );
 };
 
-FeedbackOptions.protoType = {
-  onLeaveFeedback: PropTypes.func,
+FeedbackOptions.propTypes = {
+  options: PropTypes.array.isRequired,
+  onLeaveFeedback: PropTypes.func.isRequired,
 };
+
+export default FeedbackOptions;
